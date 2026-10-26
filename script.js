@@ -16,6 +16,26 @@ navLinks.querySelectorAll("a").forEach((link) => {
   });
 });
 
+// Highlight the nav link for the section currently in view
+const sectionLinks = new Map(
+  [...navLinks.querySelectorAll('a[href^="#"]')].map((link) => [link.getAttribute("href").slice(1), link])
+);
+
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      sectionLinks.forEach((link, id) => link.classList.toggle("active", id === entry.target.id));
+    });
+  },
+  { rootMargin: "-45% 0px -50% 0px" }
+);
+
+sectionLinks.forEach((_, id) => {
+  const section = document.getElementById(id);
+  if (section) sectionObserver.observe(section);
+});
+
 // Light / dark theme toggle (initial theme is set by the inline script in <head>)
 const themeToggle = document.getElementById("theme-toggle");
 
@@ -31,11 +51,6 @@ themeToggle.addEventListener("click", () => {
   const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
   document.documentElement.setAttribute("data-theme", next);
   updateThemeLabel(next);
-  try {
-    localStorage.setItem("theme", next);
-  } catch (e) {
-    // Storage unavailable (e.g. private mode) — the theme still applies for this visit.
-  }
 });
 
 // Reveal sections on scroll

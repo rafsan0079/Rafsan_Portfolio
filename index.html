@@ -7,32 +7,27 @@
   <meta name="description" content="Portfolio of Rafsan Alam, developer and designer." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script>
-    // Apply the saved (or system) theme before the page paints to avoid a flash.
-    (function () {
-      var theme;
-      try { theme = localStorage.getItem("theme"); } catch (e) {}
-      if (theme !== "light" && theme !== "dark") {
-        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-      }
-      document.documentElement.setAttribute("data-theme", theme);
-    })();
+    // Always start in the light theme; clear any choice saved by older versions.
+    document.documentElement.setAttribute("data-theme", "light");
+    try { localStorage.removeItem("theme"); } catch (e) {}
   </script>
 </head>
 <body>
+  <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
   <header class="site-header">
     <nav class="nav container">
-      <a href="#top" class="logo">RA<span>.</span></a>
+      <a href="#top" class="logo"><span class="logo-name">Rafsan’s</span><span class="logo-tag">Portfolio</span></a>
       <div class="nav-right">
         <ul class="nav-links" id="nav-links">
           <li><a href="#about">About</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#skills">Skills</a></li>
-          <li><a href="#contact" class="btn btn-small">Contact</a></li>
+          <li><a href="#contact" class="nav-note">Contact ✉</a></li>
         </ul>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
           <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
@@ -50,8 +45,10 @@
       <h1>Rafsan Alam.</h1>
       <h2>I build things for the web.</h2>
       <p class="lead">
-        I'm a developer focused on crafting clean, accessible, and fast digital
-        experiences. Currently open to new opportunities and collaborations.
+        I'm a Computer Science &amp; Engineering student at Shahjalal University
+        of Science and Technology (SUST), and a passionate problem solver and
+        backend developer who loves building reliable, efficient systems.
+        Currently open to new opportunities and collaborations.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn">View my work</a>
@@ -75,8 +72,8 @@
             reading, hiking, or experimenting with new recipes.
           </p>
         </div>
-        <div class="about-avatar" aria-hidden="true">
-          <div class="avatar">RA</div>
+        <div class="about-avatar">
+          <img class="avatar" src="images/rafsan.png" alt="Portrait of Rafsan Alam" width="800" height="800" loading="lazy" />
         </div>
       </div>
     </section>
