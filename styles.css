@@ -493,16 +493,74 @@ h1, h2, h3, h4,
   justify-content: center;
 }
 
+/* Pop-out frame: tinted square + offset dashed outline, head breaks out above the top edge */
+.avatar-frame {
+  --size: 280px;
+  --frame-radius: 24px;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  margin-top: 84px;
+  isolation: isolate;
+}
+
+.avatar-frame::before,
+.avatar-frame::after {
+  content: "";
+  position: absolute;
+  border-radius: var(--frame-radius);
+  z-index: -1;
+}
+
+.avatar-frame::before {
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 30%, var(--glow), transparent 65%),
+    linear-gradient(160deg, var(--accent-soft), transparent 70%),
+    var(--surface);
+  box-shadow: 0 0 0 1px var(--border), 0 18px 48px var(--glow);
+}
+
+.avatar-frame::after {
+  inset: 0;
+  border: 2px dashed var(--accent);
+  opacity: 0.4;
+  transform: translate(14px, 14px);
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.avatar-frame:hover::after {
+  transform: translate(8px, 8px);
+  opacity: 0.65;
+}
+
+/* Open at the top, rounded to the square's corners at the bottom */
+.avatar-clip {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(-60% 0 0 0 round 0 0 var(--frame-radius) var(--frame-radius));
+}
+
 .avatar {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
   display: block;
-  width: 280px;
+  width: 142%;
   height: auto;
-  aspect-ratio: 1;
-  object-fit: cover;
-  object-position: center bottom;
-  /* Transparent cutout: fade the cropped bottom edge into the page background */
-  -webkit-mask-image: linear-gradient(to bottom, #000 90%, transparent);
-  mask-image: linear-gradient(to bottom, #000 90%, transparent);
+  transform: translateX(-50%);
+  transition: transform var(--transition);
+}
+
+.avatar-frame:hover .avatar {
+  transform: translateX(-50%) translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-frame::after,
+  .avatar {
+    transition: none;
+  }
 }
 
 /* ---------- Projects ---------- */
@@ -748,8 +806,10 @@ h1, h2, h3, h4,
     justify-content: flex-start;
   }
 
-  .avatar {
-    width: 200px;
+  .avatar-frame {
+    --size: 200px;
+    --frame-radius: 18px;
+    margin: 60px 14px 14px 0;
   }
 }
 
